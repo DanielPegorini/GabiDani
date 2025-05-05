@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GabiDani our time together</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #FFE4E1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animações das flechas */
+        .arrow {
+            position: absolute;
+            font-size: 30px;
+            color: #ff1a1a;
+            opacity: 0.5;
+            animation: shoot 3s linear infinite;
+            z-index: 0;
+            transform: rotate(+90deg);
+            text-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+        }
+
+        @keyframes shoot {
+            0% {
+                left: -30%;
+                top: -30%;
+            }
+            100% {
+                left: 80%;
+                top: 80%;
+            }
+        }
+
+        .container {
+            background: LavenderBlush;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            color: #FA8072;
+            margin-bottom: 2rem;
+        }
+
+        .counter {
+            font-size: 1.5rem;
+        }
+
+        .time-box {
+            display: inline-block;
+            margin: 0 1rem;
+            padding: 1rem;
+            background: #90EE90;
+            border-radius: 10px;
+            min-width: 100px;
+        }
+
+        .number {
+            font-size: 2.5rem;
+            color: #FA8072;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Flechas animadas -->
+    <div class="arrow" style="animation-delay: 0s">➶</div>
+    <div class="arrow" style="animation-delay: 1s; top: 10%">➶</div>
+    <div class="arrow" style="animation-delay: 2s; top: 30%">➶</div>
+    <div class="arrow" style="animation-delay: 3s; top: 50%">➶</div>
+    <div class="arrow" style="animation-delay: 4s; top: 70%">➶</div>
+
+    <div class="container">
+        <h1>❤️ GabiDani our time together ❤️ Forever!🍉 </h1>
+        <div class="counter">
+            <div class="time-box">
+                <div class="number" id="years">0</div>
+                Anos
+            </div>
+            <div class="time-box">
+                <div class="number" id="months">0</div>
+                Meses
+            </div>
+            <div class="time-box">
+                <div class="number" id="days">0</div>
+                Dias
+            </div>
+            <div class="time-box">
+                <div class="number" id="hours">0</div>
+                Horas
+            </div>
+            <div class="time-box">
+                <div class="number" id="minutes">0</div>
+                Minutos
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calcularTempoJuntos() {
+            // 03 de maio de 2025, 16:00 UTC-3 (19:00 UTC)
+            const dataInicial = new Date(Date.UTC(2025, 4, 3, 19, 0));
+            const dataAtual = new Date();
+
+            // Cálculo preciso considerando meses e anos
+            let anos = dataAtual.getUTCFullYear() - dataInicial.getUTCFullYear();
+            let meses = dataAtual.getUTCMonth() - dataInicial.getUTCMonth();
+            let dias = dataAtual.getUTCDate() - dataInicial.getUTCDate();
+            let horas = dataAtual.getUTCHours() - dataInicial.getUTCHours();
+            let minutos = dataAtual.getUTCMinutes() - dataInicial.getUTCMinutes();
+
+            // Ajustes para valores negativos
+            if (minutos < 0) {
+                minutos += 60;
+                horas--;
+            }
+            
+            if (horas < 0) {
+                horas += 24;
+                dias--;
+            }
+            
+            if (dias < 0) {
+                const ultimoDiaMesAnterior = new Date(dataAtual.getUTCFullYear(), dataAtual.getUTCMonth(), 0).getUTCDate();
+                dias += ultimoDiaMesAnterior;
+                meses--;
+            }
+            
+            if (meses < 0) {
+                meses += 12;
+                anos--;
+            }
+
+            return { anos, meses, dias, horas, minutos };
+        }
+
+        function atualizarContador() {
+            const tempo = calcularTempoJuntos();
+            document.getElementById('years').textContent = tempo.anos;
+            document.getElementById('months').textContent = tempo.meses;
+            document.getElementById('days').textContent = tempo.dias;
+            document.getElementById('hours').textContent = tempo.horas;
+            document.getElementById('minutes').textContent = tempo.minutos;
+        }
+
+        // Atualizar a cada minuto
+        setInterval(atualizarContador, 60000);
+        
+        // Executar imediatamente
+        atualizarContador();
+
+        // Adicionar flechas dinamicamente
+        function criarFlechas() {
+            const container = document.body;
+            for (let i = 0; i < 10; i++) {
+                const arrow = document.createElement('div');
+                arrow.className = 'arrow';
+                arrow.style.left = Math.random() * 20 + '%';
+                arrow.style.animationDelay = i * 0.5 + 's';
+                arrow.style.top = Math.random() * 100 + '%';
+                arrow.innerHTML = '➶';
+                container.appendChild(arrow);
+            }
+        }
+        criarFlechas();
+    </script>
+</body>
+</html>
